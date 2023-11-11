@@ -1,11 +1,17 @@
 const express = require('express');
 const app = express();
 const port = 8080;
-app.get('/', (req, res) => {
-res.json({
-success: true,
-});
-});
+app.use(express.json())
+
+// app.get('/', (req, res) => {
+// res.json({
+// success: true,
+// });
+// });
+
+const test10 = require('./routes/dbConnection.js');
+app.use("/dbConnection", test10)
+
 app.listen(port, () => {
 console.log(`server is listening at localhost:${port}`);
 });
