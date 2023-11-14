@@ -23,14 +23,14 @@ router.get('/', (req, res) => {
     let end = query.end;
     
     // base Query string
-    let sql = "SELECT";
+    let sql = "SELECT * FROM test_data";
 
     // Query start, end Index
-    let indices = " WHERE id BETWEEN " + db.escape(start) + " AND " + db.escape(end);
+    let indices = " AND id BETWEEN " + db.escape(start) + " AND " + db.escape(end);
     
     // Query all sensors
-    if (sensors == -1) {
-        sql += " * FROM test_data";
+    if (sensors != -1) {
+        sql += " WHERE label = " + db.escape(sensors);
         // Query all sensors
     } else if (transform != "Normal"){
         // Query specific sensors
@@ -53,6 +53,7 @@ router.get('/', (req, res) => {
     }
 
     sql += indices;
+    
     console.log(sql);
     db.query(sql, (err, result, fields) => {
         if (err) throw err;
