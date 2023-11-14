@@ -12,6 +12,9 @@ app.use(express.json())
 const test10 = require('./routes/dbConnection.js');
 app.use("/dbConnection", test10)
 
+const acquireData = require('./routes/acquireData.js');
+app.use("/acquireData", acquireData)
+
 app.listen(port, () => {
 console.log(`server is listening at localhost:${port}`);
 });
