@@ -3,7 +3,7 @@ var db = require('../lib/db.js'); // db 선언
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    db.query('select * from test_data limit 10', (err, result, fields) => {
+    db.query('SELECT * FROM test_data LIMIT 10', (err, result, fields) => {
         if (err) throw err;
         console.log(result);
         res.json(result);
