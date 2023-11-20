@@ -9,14 +9,14 @@ app.use(express.json())
 // });
 // });
 
-const fourier = require('./routes/flask.js');
-app.use("/fourier", fourier)
+const analyze = require('./routes/flask.js');
+app.use("/analyze", analyze)
 
 const test10 = require('./routes/dbConnection.js');
 app.use("/dbConnection", test10)
 
-const acquireData = require('./routes/acquireData.js');
-app.use("/acquireData", acquireData)
+// const acquireData = require('./routes/acquireData.js');
+// app.use("/acquireData", acquireData)
 
 app.listen(port, () => {
 console.log(`server is listening at localhost:${port}`);

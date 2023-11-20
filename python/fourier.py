@@ -1,7 +1,6 @@
 import numpy as np 
 import math
 
-
 def fourier(nfft, fs, vibe):
     # nfft = 샘플 개수
     # df = 주파수 증가량
@@ -22,7 +21,7 @@ def fourier(nfft, fs, vibe):
     idxy = np.argsort(-amp)
     arfreq = []  
     aramp = []
-    for i in range(11):  
+    for i in range(10):  
         arfreq.append(f0[idxy[i]])
         aramp.append(abs(fft_y[idxy[i]]))
         # print('freq=', f0[idxy[i]], 'amp=', fft_y[idxy[i]])
