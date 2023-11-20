@@ -22,8 +22,8 @@ def fourier(nfft, fs, vibe):
     idxy = np.argsort(-amp)
     arfreq = []  
     aramp = []
-    for i in range(3):  
+    for i in range(11):  
         arfreq.append(f0[idxy[i]])
-        aramp.append(fft_y[idxy[i]])
+        aramp.append(abs(fft_y[idxy[i]]))
         # print('freq=', f0[idxy[i]], 'amp=', fft_y[idxy[i]])
-    return {'freq' : arfreq, 'amp' : aramp}
+    return {'freq' : arfreq[1:], 'amp' : aramp[1:]}

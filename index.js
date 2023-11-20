@@ -9,6 +9,9 @@ app.use(express.json())
 // });
 // });
 
+const fourier = require('./routes/flask.js');
+app.use("/fourier", fourier)
+
 const test10 = require('./routes/dbConnection.js');
 app.use("/dbConnection", test10)
 
