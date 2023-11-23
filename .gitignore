@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,node
 
+### cert, key ###
+*.pem
+
 ### Node ###
 # Logs
 logs
