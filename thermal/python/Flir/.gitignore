@@ -1,0 +1,11 @@
+img
+img_temp
+org_temp
+Samples
+TEST
+tmp_rainbow
+.vscode/
+__pycache__/*
+extract/*.png
+extract/*.jpg
+*.ipynb

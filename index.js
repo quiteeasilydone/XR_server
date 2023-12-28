@@ -5,16 +5,18 @@ const app = express();
 const port = 8080;
 const path = require('path');
 
-const keyPath = path.join('./key.pem');
-const certPath = path.join('./cert.pem');
+// const caPath = path.join('./cert/ca_bundle.crt');
+// const keyPath = path.join('./cert/certificate.crt');
+// const certPath = path.join('./cert/private.key');
 
 const analyze = require('./routes/flask.js');
 
 const test10 = require('./routes/dbConnection.js');
 
 https.createServer(
-    {key: fs.readFileSync(keyPath),
-    cert: fs.readFileSync(certPath)},
+    {ca: fs.readFileSync('./cert/ca_bundle.crt'),
+    key: fs.readFileSync('./cert/private.key'),
+    cert: fs.readFileSync('./cert/certificate.crt')},
 
     app.use(express.json()),
 

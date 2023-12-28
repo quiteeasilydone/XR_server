@@ -3,6 +3,10 @@
 
 ### cert, key ###
 *.pem
+*.crt
+*.key
+win-acme.v2.2.6.1571.x64.pluggable
+cert
 
 ### Node ###
 # Logs

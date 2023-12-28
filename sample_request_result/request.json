@@ -1,0 +1,9 @@
+{
+    "__sensor__":"sensor_one, sensor_two, sensor_three, sensor_four",
+    "sensor":"sensor_one",
+    "infra": "any",
+    "__transform__":"Normal, FFT, RMS",
+    "transform":"Normal",
+    "start":"19600",
+    "end":"24600"
+}
