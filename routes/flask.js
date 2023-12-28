@@ -8,14 +8,29 @@ var db = require('../lib/db.js');
 const return_query = require('../lib/acquireData.js');
 const router = express.Router();
 
-const keyPath = path.join('./key.pem');
-const certPath = path.join('./cert.pem');
+// const keyPath = path.join('./key.pem');
+// const certPath = path.join('./cert.pem');
 
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false, // 자체 서명된 인증서를 사용할 경우 필요
-    cert: fs.readFileSync(certPath),
-    key: fs.readFileSync(keyPath)
+    cert: fs.readFileSync('./cert/certificate.crt'),
+    key: fs.readFileSync('./cert/private.key')
   });
+
+let routeRequestCount = 0
+
+  // 라우터 레벨 미들웨어
+router.use((req, res, next) => {
+    // const routePath = req.route.path;
+    // if (!routeRequestCount[routePath]) {
+    //     routeRequestCount[routePath] = 0;
+    // }
+    routeRequestCount++;
+    // console.log(`Route ${routePath} has been called ${routeRequestCount[routePath]} times`);
+    next();
+    // console.log(routeRequestCount);
+});
+
 
 router.post('/', async(req, res) => {
     try{
@@ -23,8 +38,9 @@ router.post('/', async(req, res) => {
         const sensor_name = body.sensor;
         const infra = body.infra;
         const transform = body.transform;
-        const start = body.start;
-        const end = body.end;
+        const start = parseInt(body.start) + 20*routeRequestCount;
+        const end = parseInt(body.end) + 20*routeRequestCount;
+        // console.log(start, end);
     // const vibe_data = body.file_name;
 
         const flaskServerUrl = 'https://127.0.0.1:5000/analyze';
@@ -36,11 +52,12 @@ router.post('/', async(req, res) => {
             });
         });
 
-        console.log(dbResult);
+        console.log("db connection success");
         const response = await axios.post(flaskServerUrl, { data: dbResult, transform }, {
             params: { sensor: sensor_name },
             httpsAgent
         });
+        console.log('label = ',response.data.label, 'inference time = ',response.data.inferenceTime)
         res.json(response.data);
     } catch (error) {
         console.error(error);
