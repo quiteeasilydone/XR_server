@@ -1,38 +1,34 @@
-const express = require('express')
-const axios = require('axios')
-const fs = require('fs')
-const Buffer = require('buffer').Buffer
-const path = require('path')
-const multer = require('multer')
+const express = require('express');
+const multer = require('multer');
+const fs = require('fs').promises;
+const path = require('path');
 
-const router = express.Router()
+const router = express.Router();
 
-function save_img(id, encodeImg){
-    const imgPath = path.join(".", "imgs", "thermal", "thermal_" + id + ".jpg")
-    const imgDir = path.join(".", "imgs", "thermal");
-    if (!fs.existsSync(imgDir)) {
-        fs.mkdirSync(imgDir, { recursive: true });
+// multer 설정
+const storage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        const imgDir = path.join(__dirname, "..", 'imgs', 'thermal');
+        try {
+            await fs.mkdir(imgDir, { recursive: true });
+            cb(null, imgDir);
+        } catch (err) {
+            cb(err, null);
+        }
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
     }
-    let decodeImg = Buffer.from(encodeImg, 'base64')
-    fs.writeFileSync(imgPath, decodeImg)
-}
+});
 
-router.post('/', (req, res) => {
-    try{
-        let body = req.body
-        const img_ids = body.id
-        const imgs = body.img
+const upload = multer({ storage: storage });
 
-        img_ids.forEach((value, index, img_ids) => {
-            save_img(value, imgs[index])
-        });
-
-        res.send("save all imgs")
-
-    } catch (error) {
-        console.error(error)
-        res.status(500).send('Error sending data to Flask server: ' + error)
+// 이미지 업로드 라우트
+router.post('/', upload.single('img'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
     }
-})
+    return res.status(200).send(`File uploaded successfully: ${req.file.filename}`);
+});
 
 module.exports = router;

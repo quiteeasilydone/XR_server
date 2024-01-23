@@ -7,7 +7,7 @@ const router = express.Router()
 const response = {"result" : false, "id" : null, "hasall" : false }
 
 function check_img_list(id, id_list){
-    const img_path = path.join(".", "imgs", "thermal", "thermal_" + id + ".jpg")
+    const img_path = path.join(".", "imgs", "thermal", id)
     if (fs.existsSync(img_path)){
         console.log("exists!")
     } else {
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         console.log(id_list)
         response.id = id_list
 
-        if (id_list.length == img_ids.length){
+        if (id_list.length === 0 ){
             response.hasall = true
         }
 

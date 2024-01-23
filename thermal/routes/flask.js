@@ -12,14 +12,14 @@ router.post('/', (req, res) => {
         const palettemode = body.palettemode;
         const option = body.option;
 
-        const flaskServerUrl = 'http://127.0.0.1:5000/flir';
+        const flaskServerUrl = 'http://127.0.0.1:5001/flir';
 
         img_id.forEach( async(value, index, img_id) => {
-            const response = await axios.post(flaskServerUrl, {
-                params: { id: value, palettemode: palettemode, option: option }
-            });
-            console.log(response)
-            response_list.responses.push(response)
+            console.log(value)
+            const response = await axios.post(flaskServerUrl, { id: value, palettemode: palettemode, option: option }
+            );
+            console.log(response.data)
+            response_list.responses.push(response.data)
         });
         
         response_list.result = true

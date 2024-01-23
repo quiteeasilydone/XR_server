@@ -17,11 +17,12 @@ from io import BytesIO
 
 def pallete(img_idx, pallete_op, option):
     buffered = BytesIO()
-    jpg_path = os.path.join("../../imgs/thermal", "thermal_" + img_idx + ".jpg")
-    raw_path = os.path.join("../../imgs/raw", "raw_" + img_idx + ".png")
-    IR_path = os.path.join("../../imgs/IR", "IR_" + img_idx + ".png")
+    img_id = img_idx[8:-4]
+    jpg_path = os.path.join("../imgs/thermal", img_idx)
+    raw_path = os.path.join("../imgs/raw", "raw_" + img_id + ".png")
+    IR_path = os.path.join("../imgs/IR", "IR_" + img_id + ".png")
     print(jpg_path)
-    pal_path = os.path.join('./pallete', pallete_op + '.csv')
+    pal_path = os.path.join('./Flir/pallete', pallete_op + '.csv')
     
     pal = pd.read_csv(pal_path)
 
@@ -31,7 +32,7 @@ def pallete(img_idx, pallete_op, option):
     except Exception as e:
         print(jpg_path, e)
 
-    print(fie.raw_image_np.shape)
+    # print(fie.raw_image_np.shape)
 
     # img = fie.get_heatmap_image_np()
     # img = img[:,:,::-1]
@@ -41,7 +42,7 @@ def pallete(img_idx, pallete_op, option):
     raw_img = Image.fromarray(raw_img)
     raw_img.save(raw_path)
     raw_img.save(buffered, format="JPEG")
-    raw_img_str = base64.b64encode(buffered.getvalue())
+    raw_img_str = str(base64.b64encode(buffered.getvalue()))
     # print(type(img_str))
     
     # thermal = fie.get_thermal_np()
@@ -52,9 +53,9 @@ def pallete(img_idx, pallete_op, option):
     IR_img = Image.fromarray(IR_img)
     IR_img.save(IR_path)
     IR_img.save(buffered, format="JPEG")
-    IR_img_str = base64.b64encode(buffered.getvalue())
+    IR_img_str = str(base64.b64encode(buffered.getvalue()))
     # fie.export_thermal_to_csv()
     return {"raw" : raw_img_str, "IR" : IR_img_str}
 
 if __name__ == '__main__':
-    pallete('1703666379359', 'temp', "o")
+    pallete('thermal_1703666379359.jpg', 'temp', "o")
