@@ -8,14 +8,15 @@ from Flir.temp import pallete
 
 app = Flask(__name__)
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/flir', methods=['POST'])
 def perform_analyze():
-    id = request.args.get('id')
-    # print(data)
-    palettemode = request.args.get('palettemode')
-    option = request.args.get('option')
+    data = request.get_json()
+    id = data['id']
+    palettemode = data['palettemode']
+    option = data['option']
     
     result = pallete(id, palettemode, option)
+    print(type(result['raw']))
 
     return result
 

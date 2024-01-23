@@ -4,11 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pkg ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.5",
     "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  },
+  "bin": {
+    "app": "index.js"
+  },
+  "pkg": {
+    "outputPath": "dist",
+    "targets": [
+      "win"
+    ],
+    "assets": [
+      "./node_modules/axios/dist/node/axios.cjs"
+    ]
   }
 }
