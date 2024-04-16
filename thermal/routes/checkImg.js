@@ -4,8 +4,6 @@ const path = require('path')
 
 const router = express.Router()
 
-const response = {"result" : false, "id" : null, "hasall" : false }
-
 function check_img_list(id, id_list){
     const img_path = path.join(".", "imgs", "thermal", id)
     if (fs.existsSync(img_path)){
@@ -18,6 +16,7 @@ function check_img_list(id, id_list){
 
 router.post('/', (req, res) => {
     try{
+        const response = {"result" : false, "id" : null, "hasall" : false }
         let body = req.body
         const img_ids = body.id
         const id_list = []
