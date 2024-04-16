@@ -16,7 +16,8 @@ import base64
 from io import BytesIO
 
 def pallete(img_idx, pallete_op, option):
-    buffered = BytesIO()
+    buffered_raw = BytesIO()
+    buffered_IR = BytesIO()
     img_id = img_idx[8:-4]
     jpg_path = os.path.join("../imgs/thermal", img_idx)
     raw_path = os.path.join("../imgs/raw", "raw_" + img_id + ".png")
@@ -41,8 +42,8 @@ def pallete(img_idx, pallete_op, option):
     # raw_img = cv2.cvtColor(raw_img, cv2.COLOR_BGR2RGB)
     raw_img = Image.fromarray(raw_img)
     raw_img.save(raw_path)
-    raw_img.save(buffered, format="JPEG")
-    raw_img_str = str(base64.b64encode(buffered.getvalue()))
+    raw_img.save(buffered_raw, format="JPEG")
+    raw_img_str = str(base64.b64encode(buffered_raw.getvalue()))
     # print(type(img_str))
     
     # thermal = fie.get_thermal_np()
@@ -52,8 +53,8 @@ def pallete(img_idx, pallete_op, option):
     IR_img = cv2.cvtColor(IR_img, cv2.COLOR_BGR2RGB)
     IR_img = Image.fromarray(IR_img)
     IR_img.save(IR_path)
-    IR_img.save(buffered, format="JPEG")
-    IR_img_str = str(base64.b64encode(buffered.getvalue()))
+    IR_img.save(buffered_IR, format="JPEG")
+    IR_img_str = str(base64.b64encode(buffered_IR.getvalue()))
     # fie.export_thermal_to_csv()
     return {"raw" : raw_img_str, "IR" : IR_img_str}
 
